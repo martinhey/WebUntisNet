@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -39,6 +37,11 @@ namespace WebUntisNet.Rpc
             var requestUri = uriBuilder.Uri;
 
             return await SendAsync<AuthenticationRequest, AuthenticationResponse>(requestUri, request, null);
+        }
+
+        public Task<RpcResponse> LogoutAsync(LogoutRequest request, string sessionId)
+        {
+            return SendAsync<LogoutRequest, RpcResponse>(_serviceUri, request, sessionId);
         }
 
         private static async Task<string> SendAsync(Uri uri, string request, string sessionId)
@@ -99,15 +102,7 @@ namespace WebUntisNet.Rpc
             }
 
 
-            var result = JsonConvert.DeserializeObject<TResult>(responseText);
-
-            string errorMsg = result.error?.message;
-            if (!string.IsNullOrEmpty(errorMsg))
-            {
-                throw new RpcException(errorMsg);
-            }
-
-            return result;
+            return JsonConvert.DeserializeObject<TResult>(responseText);
         }
     }
 

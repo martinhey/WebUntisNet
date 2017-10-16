@@ -3,12 +3,17 @@ namespace WebUntisNet.Rpc.Types
     /// <summary>
     /// Base-Class for all Responses
     /// </summary>
-    public class RpcResponse
+    public abstract class RpcResponse
     {
-        public string id;
-        public object result;
-        public readonly string jsonrpc = "2.0";
+        public string id { get; set; }
+        public virtual RpcResponseResult result { get; set; }
+        public string jsonrpc { get; set; }
 
         public Error error;
+    }
+
+    public abstract class RpcResponseResult
+    {
+        
     }
 }
