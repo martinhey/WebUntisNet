@@ -94,7 +94,7 @@ namespace WebUntisNet.Rpc
             where TResult : IRpcResponse
         {
             string requestText = JsonConvert.SerializeObject(request);
-            string responseText = await SendAsync(uri, requestText, null);
+            string responseText = await SendAsync(uri, requestText, sessionId);
 
             if (responseText.Contains("<!DOCTYPE html>"))
             {
