@@ -1,6 +1,6 @@
 namespace WebUntisNet.Rpc.Types
 {
-    public class RpcResponseResult
+    public interface IRpcResponseResult
     {
     }
 }

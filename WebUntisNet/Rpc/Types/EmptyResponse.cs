@@ -1,6 +1,6 @@
 ﻿namespace WebUntisNet.Rpc.Types
 {
-    public class EmptyResponse : RpcResponse<RpcResponseResult>
+    public class EmptyResponse : RpcResponse<IRpcResponseResult>
     {
     }
 }

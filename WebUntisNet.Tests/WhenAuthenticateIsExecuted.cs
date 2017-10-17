@@ -11,7 +11,7 @@ namespace WebUntisNet.Tests
         public async Task DataShouldBeReturned()
         {
             var client = new RpcClient("https://demo.webuntis.com/WebUntis/jsonrpc.do");
-            var request = new AuthenticationRequest("Schueler", "", "CLIENT");            
+            var request = new AuthenticationRequest("Schueler", "", "CLIENT");
             var response = await client.AuthenticateAsync("demo_inf", request);
 
             Assert.IsNull(response.error);

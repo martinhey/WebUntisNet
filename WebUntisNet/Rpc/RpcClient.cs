@@ -20,7 +20,10 @@ namespace WebUntisNet.Rpc
             }
 
             _serviceUri = new Uri(serviceUrl);
+            Timeout = 30;
         }
+
+        public int Timeout { get; set; }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(string schoolName, AuthenticationRequest request)
         {
@@ -44,13 +47,18 @@ namespace WebUntisNet.Rpc
             return SendAsync<LogoutRequest, EmptyResponse>(_serviceUri, request, sessionId);
         }
 
-        private static async Task<string> SendAsync(Uri uri, string request, string sessionId)
+        public Task<TeachersResponse> GetTeachersAsync(TeachersRequest request, string sessionId)
+        {
+            return SendAsync<TeachersRequest, TeachersResponse>(_serviceUri, request, sessionId);
+        }
+
+        private async Task<string> SendAsync(Uri uri, string request, string sessionId)
         {
             
-            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
-            
+
             if (!string.IsNullOrWhiteSpace(sessionId))
             {
                 if (httpWebRequest.CookieContainer == null)
@@ -72,8 +80,8 @@ namespace WebUntisNet.Rpc
                 streamWriter.Close();
             }
 
-            HttpWebResponse httpResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync();
-            Stream responseStream = httpResponse.GetResponseStream();
+            var httpResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync(TimeSpan.FromSeconds(Timeout));
+            var responseStream = httpResponse.GetResponseStream();
             if (responseStream == null)
             {
                 throw new RpcException("response stream was null!");

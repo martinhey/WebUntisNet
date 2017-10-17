@@ -7,6 +7,7 @@ namespace WebUntisNet.Rpc
     {
         Task<AuthenticationResponse> AuthenticateAsync(string schoolName, AuthenticationRequest request);
         Task<EmptyResponse> LogoutAsync(LogoutRequest request, string sessionId);
+        Task<TeachersResponse> GetTeachersAsync(TeachersRequest request, string sessionId);
     }
 
 }

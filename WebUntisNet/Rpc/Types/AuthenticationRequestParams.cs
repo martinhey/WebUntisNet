@@ -1,6 +1,6 @@
 ﻿namespace WebUntisNet.Rpc.Types
 {
-    public class AuthenticationRequestParams: RpcRequestParams
+    public class AuthenticationRequestParams: IRpcRequestParams
     {
         public string user = "ANDROID";
         public string password;

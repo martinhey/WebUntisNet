@@ -3,7 +3,7 @@ namespace WebUntisNet.Rpc.Types
     /// <summary>
     /// Base-Class for all Requests
     /// </summary>
-    public abstract class RpcRequest<T> : IRpcRequest where T : RpcRequestParams, new()
+    public abstract class RpcRequest<T> : IRpcRequest where T : IRpcRequestParams, new()
     {
         public RpcRequest()
         {
