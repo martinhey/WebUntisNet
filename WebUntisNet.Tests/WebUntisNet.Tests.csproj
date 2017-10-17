@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UntisClientTest.cs" />
     <Compile Include="WhenAuthenticateIsExecuted.cs" />
   </ItemGroup>
   <ItemGroup>

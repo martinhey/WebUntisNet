@@ -24,7 +24,7 @@ namespace WebUntisNet
         {
             _rpcClient = new RpcClient(serviceEndpoint);
             
-            AuthenticateAsync(serviceEndpoint, schoolName, userName, clientName).GetAwaiter().GetResult();
+            AuthenticateAsync(schoolName, userName, password, clientName).GetAwaiter().GetResult();
         }
 
         public async Task AuthenticateAsync(string schoolName, string userName, string password, string clientName)
