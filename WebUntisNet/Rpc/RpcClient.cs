@@ -97,7 +97,7 @@ namespace WebUntisNet.Rpc
         }
 
 
-        private static async Task<TResult> SendAsync<TRequest, TResult>(Uri uri, TRequest request, string sessionId) 
+        private async Task<TResult> SendAsync<TRequest, TResult>(Uri uri, TRequest request, string sessionId) 
             where TRequest : IRpcRequest 
             where TResult : IRpcResponse
         {
