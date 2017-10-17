@@ -3,16 +3,16 @@ namespace WebUntisNet.Rpc.Types
     /// <summary>
     /// Base-Class for all Requests
     /// </summary>
-    public abstract class RpcRequest
+    public abstract class RpcRequest<T> : IRpcRequest where T : RpcRequestParams, new()
     {
         public RpcRequest()
         {
-            @params = new RpcRequestParams();
+            @params = new T();
         }
 
         public abstract string id { get;  }
         public abstract string method { get;  }
-        public virtual RpcRequestParams @params { get;  }
+        public T @params { get;  }
         public string jsonrpc => "2.0";
     }
 }

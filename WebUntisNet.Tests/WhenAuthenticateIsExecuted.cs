@@ -12,9 +12,12 @@ namespace WebUntisNet.Tests
         {
             var client = new RpcClient("https://demo.webuntis.com/WebUntis/jsonrpc.do");
             var request = new AuthenticationRequest("Schueler", "", "CLIENT");            
-            var result = await client.AuthenticateAsync("demo_inf", request);
+            var response = await client.AuthenticateAsync("demo_inf", request);
 
-            Assert.IsNull(result.error);
+            Assert.IsNull(response.error);
+            Assert.IsNotEmpty(response.result.sessionId);
+            Assert.IsTrue(response.result.personId > 0);
+            Assert.IsTrue(response.result.personType > 0);
         }
     }
 }

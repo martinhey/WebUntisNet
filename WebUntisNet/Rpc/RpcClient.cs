@@ -39,9 +39,9 @@ namespace WebUntisNet.Rpc
             return await SendAsync<AuthenticationRequest, AuthenticationResponse>(requestUri, request, null);
         }
 
-        public Task<RpcResponse> LogoutAsync(LogoutRequest request, string sessionId)
+        public Task<EmptyResponse> LogoutAsync(LogoutRequest request, string sessionId)
         {
-            return SendAsync<LogoutRequest, RpcResponse>(_serviceUri, request, sessionId);
+            return SendAsync<LogoutRequest, EmptyResponse>(_serviceUri, request, sessionId);
         }
 
         private static async Task<string> SendAsync(Uri uri, string request, string sessionId)
@@ -90,8 +90,8 @@ namespace WebUntisNet.Rpc
 
 
         private static async Task<TResult> SendAsync<TRequest, TResult>(Uri uri, TRequest request, string sessionId) 
-            where TRequest : RpcRequest 
-            where TResult : RpcResponse
+            where TRequest : IRpcRequest 
+            where TResult : IRpcResponse
         {
             string requestText = JsonConvert.SerializeObject(request);
             string responseText = await SendAsync(uri, requestText, null);

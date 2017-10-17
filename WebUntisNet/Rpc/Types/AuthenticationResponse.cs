@@ -1,8 +1,6 @@
 ﻿namespace WebUntisNet.Rpc.Types
 {
-    public class AuthenticationResponse : RpcResponse
+    public class AuthenticationResponse : RpcResponse<AuthenticationsResponseResult>
     {
-        public new AuthenticationsResponseResult result { get; set; }
     }
-
 }

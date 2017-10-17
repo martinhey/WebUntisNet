@@ -32,7 +32,10 @@ namespace WebUntisNet
             var request = new AuthenticationRequest(userName, password, clientName);
             var result = await _rpcClient.AuthenticateAsync(schoolName, request);
 
-            EnsureSuccess(result);
+            if (!string.IsNullOrEmpty(result?.error?.message))
+            {
+                throw new RpcException(result.error.message);
+            }
 
             _sessionId = result.result.sessionId;
             PersonType = (PersonType) result.result.personType;
@@ -44,21 +47,16 @@ namespace WebUntisNet
             var request = new LogoutRequest();
             var result = await _rpcClient.LogoutAsync(request, _sessionId);
 
-            EnsureSuccess(result);
+            if (!string.IsNullOrEmpty(result?.error?.message))
+            {
+                throw new RpcException(result.error.message);
+            }
 
             _sessionId = null;
             PersonType = null;
             PersonId = null;
         }
 
-        private void EnsureSuccess(RpcResponse response)
-        {
-            string errorMsg = response.error?.message;
-            if (!string.IsNullOrEmpty(errorMsg))
-            {
-                throw new RpcException(errorMsg);
-            }
-        }
 
         public bool IsLoggedIn => !string.IsNullOrEmpty(_sessionId);
         

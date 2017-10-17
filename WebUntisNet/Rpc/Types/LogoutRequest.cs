@@ -1,6 +1,6 @@
 ﻿namespace WebUntisNet.Rpc.Types
 {
-    public class LogoutRequest : RpcRequest
+    public class LogoutRequest : RpcRequest<EmptyRequestParams>
     {
         public override string id => "ID";
 
