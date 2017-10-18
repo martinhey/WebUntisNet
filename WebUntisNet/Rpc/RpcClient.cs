@@ -112,5 +112,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<TimegridRequest, TimegridResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<StatusDataResponse> GetStatusDataAsync(StatusDataRequest request, string sessionId)
+        {
+            return SendAsync<StatusDataRequest, StatusDataResponse>(_serviceUri, request, sessionId);
+        }
     }
 }

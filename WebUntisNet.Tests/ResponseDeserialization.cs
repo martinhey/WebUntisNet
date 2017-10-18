@@ -176,5 +176,21 @@ namespace WebUntisNet.Tests
 
             Assert.IsTrue(result.result.Count == 2);
         }
+
+        [Test]
+        public async Task CanDeserializeGetStatusDataResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":{\"lstypes\":[{\"ls\":{\"foreColor\":\"000000\",\"backColor\":\"ee7f00\"}},{\"oh\":{\"foreColor\":\"e6e3e1\",\"backColor\":\"250eee\"}},{\"sb\":{\"foreColor\":\"000000\",\"backColor\":\"1feee7\"}},{\"bs\":{\"foreColor\":\"000000\",\"backColor\":\"c03b6e\"}},{\"ex\":{\"foreColor\":\"000000\",\"backColor\":\"fdc400\"}}],\r\n\"codes\":[{\"cancelled\":{\"foreColor\":\"000000\",\"backColor\":\"b1b3b4\"}},{\"irregular\":{\"foreColor\":\"e3e33b\",\"backColor\":\"77649a\"}}]}}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetStatusDataAsync(new StatusDataRequest(), "session");
+
+            Assert.IsTrue(result.result.lstypes.Count == 5);
+        }
     }
 }
