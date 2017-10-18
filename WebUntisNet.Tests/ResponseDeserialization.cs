@@ -160,5 +160,21 @@ namespace WebUntisNet.Tests
             Assert.IsTrue(result.result[0].longName == "Nationalfeiertag");
             Assert.IsTrue(result.result[1].longName == "Allerheiligen");
         }
+
+        [Test]
+        public async Task CanDeserializeGetTimegridResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"ID\",\"result\":[{\"day\":0,\"timeUnits\":[{\"startTime\":800,\"endTime\":850},{\"startTime\":855,\"endTime\":945},{\"startTime\":1000,\"endTime\":1050}]}, {\"day\":1,\"timeUnits\":[{\"startTime\":800,\"endTime\":850}]}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetTimegridAsync(new TimegridRequest(), "session");
+
+            Assert.IsTrue(result.result.Count == 2);
+        }
     }
 }

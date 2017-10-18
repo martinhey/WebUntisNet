@@ -13,6 +13,7 @@ namespace WebUntisNet.Rpc
         Task<SubjectsResponse> GetSubjectsAsync(SubjectsRequest request, string sessionId);
         Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, string sessionId);
         Task<DepartmentsResponse> GetDepartmentsAsync(DepartmentsRequest request, string sessionId);
+        Task<TimegridResponse> GetTimegridAsync(TimegridRequest request, string sessionId);
     }
 
 }

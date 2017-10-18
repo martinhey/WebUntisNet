@@ -107,5 +107,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<HolidaysRequest, HolidaysResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<TimegridResponse> GetTimegridAsync(TimegridRequest request, string sessionId)
+        {
+            return SendAsync<TimegridRequest, TimegridResponse>(_serviceUri, request, sessionId);
+        }
     }
 }

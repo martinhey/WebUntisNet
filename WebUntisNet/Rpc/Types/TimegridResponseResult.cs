@@ -2,7 +2,7 @@
 
 namespace WebUntisNet.Rpc.Types
 {
-    public class TeachersResponseResult : List<Teacher>, IRpcResponseResult
+    public class TimegridResponseResult : List<TimegridItem>, IRpcResponseResult
     {
     }
 }
