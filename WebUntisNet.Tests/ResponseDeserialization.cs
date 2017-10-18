@@ -26,5 +26,24 @@ namespace WebUntisNet.Tests
             Assert.AreEqual(2, result.result.personType);
             Assert.AreEqual(17, result.result.personId);
         }
+
+        [Test]
+        public async Task CanDeserializeGetTeachersResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"ID\",\"result\":[{\"id\":1,\"name\":\"Bach\",\"foreName\":\"Ingeborg\",\"longName\":\"Bachmann\",\"foreColor\":\"000000\",\"backColor\":\"000000\"},{\"id\":2,\"name\":\"Foss\",\"foreName\":\"Dian\",\"longName\":\"Fossey\",\"foreColor\":\"000000\",\"backColor\":\"000000\"}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetTeachersAsync(new TeachersRequest(), "session");
+
+            Assert.IsTrue(result.result.Count == 2);
+            Assert.IsTrue(result.result[0].name == "Bach");
+            Assert.IsTrue(result.result[0].longname == "Bachmann");
+            Assert.IsTrue(result.result[1].longname == "Fossey");
+        }
     }
 }

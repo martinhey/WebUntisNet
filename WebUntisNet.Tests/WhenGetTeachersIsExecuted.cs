@@ -15,8 +15,8 @@ namespace WebUntisNet.Tests
         public void BeforeTest()
         {
             _client = new RpcClient(new HttpClient(), "https://demo.webuntis.com/WebUntis/jsonrpc.do");
-            var authRequest = new AuthenticationRequest("Raumadmin", "", "CLIENT");
-            var authResponse = _client.AuthenticateAsync("demo_kb", authRequest).GetAwaiter().GetResult();
+            var authRequest = new AuthenticationRequest("api", "api", "CLIENT");
+            var authResponse = _client.AuthenticateAsync("demo_inf", authRequest).GetAwaiter().GetResult();
             _sessionId = authResponse.result.sessionId;
         }
 
