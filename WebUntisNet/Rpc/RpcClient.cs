@@ -122,5 +122,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<CurrentSchoolYearRequest, SchoolYearsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<SchoolYearsResponse> GetSchoolYearsAsync(SchoolYearsRequest request, string sessionId)
+        {
+            return SendAsync<SchoolYearsRequest, SchoolYearsResponse>(_serviceUri, request, sessionId);
+        }
     }
 }

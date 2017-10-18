@@ -15,6 +15,8 @@ namespace WebUntisNet.Rpc
         Task<DepartmentsResponse> GetDepartmentsAsync(DepartmentsRequest request, string sessionId);
         Task<TimegridResponse> GetTimegridAsync(TimegridRequest request, string sessionId);
         Task<StatusDataResponse> GetStatusDataAsync(StatusDataRequest request, string sessionId);
+        Task<SchoolYearsResponse> GetSchoolYearsAsync(SchoolYearsRequest request, string sessionId);
+        Task<SchoolYearsResponse> GetCurrentSchoolYearAsync(CurrentSchoolYearRequest request, string sessionId);
     }
 
 }
