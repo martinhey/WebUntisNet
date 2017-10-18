@@ -8,7 +8,7 @@ namespace WebUntisNet.Tests
         [Test]
         public void LoginAndLogout()
         {
-            var client = new UntisClient("https://demo.webuntis.com/WebUntis/jsonrpc.do", "demo_inf", "Schueler", "");
+            var client = new WebUntisClient("https://demo.webuntis.com/WebUntis/jsonrpc.do", "demo_inf", "Schueler", "");
             Assert.IsTrue(client.IsLoggedIn);
             client.Dispose();
             Assert.IsFalse(client.IsLoggedIn);

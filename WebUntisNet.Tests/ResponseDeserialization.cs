@@ -42,8 +42,27 @@ namespace WebUntisNet.Tests
 
             Assert.IsTrue(result.result.Count == 2);
             Assert.IsTrue(result.result[0].name == "Bach");
-            Assert.IsTrue(result.result[0].longname == "Bachmann");
-            Assert.IsTrue(result.result[1].longname == "Fossey");
+            Assert.IsTrue(result.result[0].longName == "Bachmann");
+            Assert.IsTrue(result.result[1].longName == "Fossey");
+        }
+
+        [Test]
+        public async Task CanDeserializeGetStudentsResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"result\":[{\"id\":1,\"key\":\"1234567\",\"name\":\"MüllerAle\",\"foreName\":\"Alexander\",\"longName\":\"Müller\",\"gender\":\"male\"},{\"id\":2,\"key\":\"7654321\",\"name\":\"SchmidAme\",\"foreName\":\"Amelie\",\"longName\":\"Schmidt\",\"gender\":\"female\"}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetStudentsAsync(new StudentsRequest(), "session");
+
+            Assert.IsTrue(result.result.Count == 2);
+            Assert.IsTrue(result.result[0].name == "MüllerAle");
+            Assert.IsTrue(result.result[0].longName == "Müller");
+            Assert.IsTrue(result.result[1].longName == "Schmidt");
         }
     }
 }

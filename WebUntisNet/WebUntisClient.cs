@@ -6,7 +6,7 @@ using WebUntisNet.Rpc.Types;
 
 namespace WebUntisNet
 {
-    public class UntisClient : IDisposable
+    public class WebUntisClient : IDisposable
     {
         private const string DefaultClientName = "WebUntisNet";
         private readonly IRpcClient _rpcClient;
@@ -17,11 +17,11 @@ namespace WebUntisNet
         public PersonType? PersonType { get; private set; }
         public int? PersonId { get; private set; }
 
-        public UntisClient(string serviceEndpoint, string schoolName, string userName, string password): this(serviceEndpoint, schoolName, userName, password, DefaultClientName)
+        public WebUntisClient(string serviceEndpoint, string schoolName, string userName, string password): this(serviceEndpoint, schoolName, userName, password, DefaultClientName)
         {
         }
 
-        public UntisClient(string serviceEndpoint, string schoolName, string userName, string password, string clientName)
+        public WebUntisClient(string serviceEndpoint, string schoolName, string userName, string password, string clientName)
         {
             _rpcClient = new RpcClient(new HttpClient(), serviceEndpoint);
             

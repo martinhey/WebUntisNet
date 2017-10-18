@@ -76,6 +76,11 @@ namespace WebUntisNet.Rpc
 
             return JsonConvert.DeserializeObject<TResult>(responseText);
         }
+
+        public Task<StudentsResponse> GetStudentsAsync(StudentsRequest request, string sessionId)
+        {
+            return SendAsync<StudentsRequest, StudentsResponse>(_serviceUri, request, sessionId);
+        }
     }
 
 
