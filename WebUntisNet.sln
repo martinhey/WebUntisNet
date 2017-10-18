@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUntisNet", "WebUntisNet\WebUntisNet.csproj", "{9F0B649D-CB72-4275-B486-5E9BC0A92569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUntisNet.Tests", "WebUntisNet.Tests\WebUntisNet.Tests.csproj", "{04B68FEE-E702-4AB5-9D5B-9923E15F5628}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUntisNet.Tests", "WebUntisNet.Tests\WebUntisNet.Tests.csproj", "{04B68FEE-E702-4AB5-9D5B-9923E15F5628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUntisNet.Framework.Tests", "WebUntisNet.Framework.Tests\WebUntisNet.Framework.Tests.csproj", "{EE98BFEE-28A1-4000-A0B0-8A6C3DFB97A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{04B68FEE-E702-4AB5-9D5B-9923E15F5628}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04B68FEE-E702-4AB5-9D5B-9923E15F5628}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04B68FEE-E702-4AB5-9D5B-9923E15F5628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE98BFEE-28A1-4000-A0B0-8A6C3DFB97A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE98BFEE-28A1-4000-A0B0-8A6C3DFB97A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE98BFEE-28A1-4000-A0B0-8A6C3DFB97A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE98BFEE-28A1-4000-A0B0-8A6C3DFB97A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
