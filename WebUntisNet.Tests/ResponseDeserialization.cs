@@ -64,5 +64,24 @@ namespace WebUntisNet.Tests
             Assert.IsTrue(result.result[0].longName == "Müller");
             Assert.IsTrue(result.result[1].longName == "Schmidt");
         }
+
+        [Test]
+        public async Task CanDeserializeGetClassesResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"ID\",\"result\":[{\"id\":71,\"name\":\"1A\",\"longName\":\"Klasse 1A\",\"foreColor\":\"000000\",\"backColor\":\"000000\",did:2}, {\"id\":72,\"name\":\"1B\",\"longName\":\"Klasse 1B\",\"foreColor\":\"000000\",\"backColor\":\"000000\"}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetClassesAsync(new ClassesRequest(), "session");
+
+            Assert.IsTrue(result.result.Count == 2);
+            Assert.IsTrue(result.result[0].name == "1A");
+            Assert.IsTrue(result.result[0].longName == "Klasse 1A");
+            Assert.IsTrue(result.result[1].longName == "Klasse 1B");
+        }
     }
 }
