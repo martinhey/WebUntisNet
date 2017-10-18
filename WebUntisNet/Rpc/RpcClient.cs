@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using WebUntisNet.Net;
@@ -96,7 +94,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<RoomsRequest, RoomsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<DepartmentsResponse> GetDepartmentsAsync(DepartmentsRequest request, string sessionId)
+        {
+            return SendAsync<DepartmentsRequest, DepartmentsResponse>(_serviceUri, request, sessionId);
+        }
     }
-
-
 }

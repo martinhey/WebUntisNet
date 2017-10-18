@@ -12,6 +12,7 @@ namespace WebUntisNet.Rpc
         Task<ClassesResponse> GetClassesAsync(ClassesRequest request, string sessionId);
         Task<SubjectsResponse> GetSubjectsAsync(SubjectsRequest request, string sessionId);
         Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, string sessionId);
+        Task<DepartmentsResponse> GetDepartmentsAsync(DepartmentsRequest request, string sessionId);
     }
 
 }
