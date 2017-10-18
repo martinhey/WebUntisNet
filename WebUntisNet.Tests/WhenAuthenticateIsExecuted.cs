@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Threading.Tasks;
+using WebUntisNet.Net;
 using WebUntisNet.Rpc;
 using WebUntisNet.Rpc.Types;
 
@@ -10,7 +11,7 @@ namespace WebUntisNet.Tests
         [Test]
         public async Task DataShouldBeReturned()
         {
-            var client = new RpcClient("https://demo.webuntis.com/WebUntis/jsonrpc.do");
+            var client = new RpcClient(new HttpClient(), "https://demo.webuntis.com/WebUntis/jsonrpc.do");
             var request = new AuthenticationRequest("Schueler", "", "CLIENT");
             var response = await client.AuthenticateAsync("demo_inf", request);
 

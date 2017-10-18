@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WebUntisNet.Net;
 using WebUntisNet.Rpc;
 using WebUntisNet.Rpc.Types;
 
@@ -14,7 +15,7 @@ namespace WebUntisNet
         private bool _disposed = false; // To detect redundant calls
 
         public PersonType? PersonType { get; private set; }
-        public int? PersonId { get; set; }
+        public int? PersonId { get; private set; }
 
         public UntisClient(string serviceEndpoint, string schoolName, string userName, string password): this(serviceEndpoint, schoolName, userName, password, DefaultClientName)
         {
@@ -22,7 +23,7 @@ namespace WebUntisNet
 
         public UntisClient(string serviceEndpoint, string schoolName, string userName, string password, string clientName)
         {
-            _rpcClient = new RpcClient(serviceEndpoint);
+            _rpcClient = new RpcClient(new HttpClient(), serviceEndpoint);
             
             AuthenticateAsync(schoolName, userName, password, clientName).GetAwaiter().GetResult();
         }

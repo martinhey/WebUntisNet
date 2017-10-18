@@ -4,20 +4,23 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using WebUntisNet.Net;
 using WebUntisNet.Rpc.Types;
 
 namespace WebUntisNet.Rpc
 {
     public class RpcClient : IRpcClient
     {
+        private readonly IHttpClient _httpClient;
         private readonly Uri _serviceUri;
 
-        public RpcClient(string serviceUrl)
+        public RpcClient(IHttpClient httpClient, string serviceUrl)
         {
             if (string.IsNullOrEmpty(serviceUrl))
             {
                 throw new ArgumentException("no service url specified", nameof(serviceUrl));
             }
+            _httpClient = httpClient;
 
             _serviceUri = new Uri(serviceUrl);
             Timeout = 30;
@@ -52,48 +55,9 @@ namespace WebUntisNet.Rpc
             return SendAsync<TeachersRequest, TeachersResponse>(_serviceUri, request, sessionId);
         }
 
-        private async Task<string> SendAsync(Uri uri, string request, string sessionId)
+        private Task<string> SendAsync(Uri uri, string request, string sessionId)
         {
-            
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            if (!string.IsNullOrWhiteSpace(sessionId))
-            {
-                if (httpWebRequest.CookieContainer == null)
-                {
-                    httpWebRequest.CookieContainer = new CookieContainer();
-                }
-
-                if (!string.IsNullOrWhiteSpace(sessionId))
-                {
-                    httpWebRequest.CookieContainer.Add(new Cookie("JSESSIONID", sessionId, "/", uri.Host));
-                }
-            }
-            
-
-            using (StreamWriter streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
-            {
-                await streamWriter.WriteAsync(request);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync(TimeSpan.FromSeconds(Timeout));
-            var responseStream = httpResponse.GetResponseStream();
-            if (responseStream == null)
-            {
-                throw new RpcException("response stream was null!");
-            }
-
-            string result;
-            using (StreamReader streamReader = new StreamReader(responseStream))
-            {
-                result = await streamReader.ReadToEndAsync();
-            }
-
-            return result;
+            return _httpClient.SendAsync(uri, request, sessionId, Timeout);
         }
 
 

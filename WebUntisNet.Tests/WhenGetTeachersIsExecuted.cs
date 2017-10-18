@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using WebUntisNet.Rpc;
 using WebUntisNet.Rpc.Types;
+using WebUntisNet.Net;
 
 namespace WebUntisNet.Tests
 {
@@ -13,9 +14,9 @@ namespace WebUntisNet.Tests
         [SetUp]
         public void BeforeTest()
         {
-            _client = new RpcClient("https://demo.webuntis.com/WebUntis/jsonrpc.do");
-            var authRequest = new AuthenticationRequest("Schueler", "", "CLIENT");
-            var authResponse = _client.AuthenticateAsync("demo_inf", authRequest).GetAwaiter().GetResult();
+            _client = new RpcClient(new HttpClient(), "https://demo.webuntis.com/WebUntis/jsonrpc.do");
+            var authRequest = new AuthenticationRequest("Raumadmin", "", "CLIENT");
+            var authResponse = _client.AuthenticateAsync("demo_kb", authRequest).GetAwaiter().GetResult();
             _sessionId = authResponse.result.sessionId;
         }
 
