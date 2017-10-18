@@ -86,6 +86,11 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<ClassesRequest, ClassesResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<SubjectsResponse> GetSubjectsAsync(SubjectsRequest request, string sessionId)
+        {
+            return SendAsync<SubjectsRequest, SubjectsResponse>(_serviceUri, request, sessionId);
+        }
     }
 
 

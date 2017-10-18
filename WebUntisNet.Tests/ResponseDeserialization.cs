@@ -83,5 +83,24 @@ namespace WebUntisNet.Tests
             Assert.IsTrue(result.result[0].longName == "Klasse 1A");
             Assert.IsTrue(result.result[1].longName == "Klasse 1B");
         }
+
+        [Test]
+        public async Task CanDeserializeGetSubjectsResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"ID\",\"result\":[{\"id\":1,\"name\":\"RK\",\"longName\":\"Kath.Religion\",\"foreColor\":\"000000\",\"backColor\":\"000000\"},{\"id\":2,\"name\":\"RE\",\"longName\":\"Evang. Religion\",\"foreColor\":\"000000\",\"backColor\":\"000000\"}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetSubjectsAsync(new SubjectsRequest(), "session");
+
+            Assert.IsTrue(result.result.Count == 2);
+            Assert.IsTrue(result.result[0].name == "RK");
+            Assert.IsTrue(result.result[0].longName == "Kath.Religion");
+            Assert.IsTrue(result.result[1].longName == "Evang. Religion");
+        }
     }
 }
