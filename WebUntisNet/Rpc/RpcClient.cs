@@ -7,6 +7,9 @@ using WebUntisNet.Rpc.Types;
 
 namespace WebUntisNet.Rpc
 {
+    /// <summary>
+    /// Rpc client based on untis JSON-RPC API version 4.10.2016
+    /// </summary>
     public class RpcClient : IRpcClient
     {
         private readonly IHttpClient _httpClient;
@@ -98,6 +101,11 @@ namespace WebUntisNet.Rpc
         public Task<DepartmentsResponse> GetDepartmentsAsync(DepartmentsRequest request, string sessionId)
         {
             return SendAsync<DepartmentsRequest, DepartmentsResponse>(_serviceUri, request, sessionId);
+        }
+
+        public Task<HolidaysResponse> GetHolidaysAsync(HolidaysRequest request, string sessionId)
+        {
+            return SendAsync<HolidaysRequest, HolidaysResponse>(_serviceUri, request, sessionId);
         }
     }
 }

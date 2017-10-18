@@ -140,5 +140,25 @@ namespace WebUntisNet.Tests
             Assert.IsTrue(result.result[0].longName == "AAA1");
             Assert.IsTrue(result.result[1].longName == "AAA2");
         }
+
+
+        [Test]
+        public async Task CanDeserializeGetHolidaysResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"ID\",\"result\":[{\"id\":44,\"name\":\"Natio\",\"longName\":\"Nationalfeiertag\",\"startDate\":20101026,\"endDate\":20101026},{\"id\":42,\"name\":\"Allerheiligen\",\"longName\":\"Allerheiligen\",\"startDate\":20101101,\"endDate\":20101101}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var result = await sut.GetHolidaysAsync(new HolidaysRequest(), "session");
+
+            Assert.IsTrue(result.result.Count == 2);
+            Assert.IsTrue(result.result[0].name == "Natio");
+            Assert.IsTrue(result.result[0].longName == "Nationalfeiertag");
+            Assert.IsTrue(result.result[1].longName == "Allerheiligen");
+        }
     }
 }
