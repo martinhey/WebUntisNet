@@ -91,6 +91,11 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<SubjectsRequest, SubjectsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, string sessionId)
+        {
+            return SendAsync<RoomsRequest, RoomsResponse>(_serviceUri, request, sessionId);
+        }
     }
 
 
