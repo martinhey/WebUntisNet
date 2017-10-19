@@ -22,7 +22,7 @@ namespace WebUntisNet.Tests
         }
         
 
-        [Fact(Skip = "broken")]
+        [Fact(Skip = "no user with sufficient rights")]
         public async Task DataShouldBeReturned()
         {
             var request = new TeachersRequest();

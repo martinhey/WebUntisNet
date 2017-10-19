@@ -2,7 +2,7 @@
 {
     public class StatusDataRequest : RpcRequest<EmptyRequestParams>
     {
-        public override string id => "ID";
+        public override string id => "11";
         public override string method => "getStatusData";
     }
 }

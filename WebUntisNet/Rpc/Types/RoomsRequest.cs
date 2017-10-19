@@ -2,7 +2,7 @@
 {
     public class RoomsRequest : RpcRequest<EmptyRequestParams>
     {
-        public override string id => "ID";
+        public override string id => "7";
 
         public override string method => "getRooms";
     }

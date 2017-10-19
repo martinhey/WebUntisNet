@@ -9,7 +9,7 @@
             @params.client = client;
         }
 
-        public override string id => "ID";
+        public override string id => "1";
         public override string method => "authenticate";
     }
 }

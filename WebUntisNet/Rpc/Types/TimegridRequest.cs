@@ -2,7 +2,7 @@
 {
     public class TimegridRequest : RpcRequest<EmptyRequestParams>
     {
-        public override string id => "ID";
+        public override string id => "10";
         public override string method => "getTimegridUnits";
     }
 }
