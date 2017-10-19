@@ -1,8 +1,13 @@
 language: csharp
-dist: trusty
-sudo: required
-mono: none
-dotnet: 2.0.0
+
+matrix:
+  include:
+    - dist: trusty
+      sudo: required
+      mono: none
+      dotnet: 2.0.0
+    - mono: latest
+    
 script:
   - ./build.sh --quiet verify
 before_install:
