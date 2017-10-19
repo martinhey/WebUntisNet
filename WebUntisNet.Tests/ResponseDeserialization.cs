@@ -226,6 +226,26 @@ namespace WebUntisNet.Tests
             Assert.True(result.result.Count == 2);
             Assert.True(result.result[0].name == "2010/2011");
         }
+
+        [Fact]
+        public async Task CanDeserializeGetTimetableResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":[{\"id\":125043,\"date\":20110117,\"startTime\":800,\"endTime\":850, \"kl\":[{\"id\":71}],\"te\":[{\"id\":23}],\"su\":[{\"id\":13}],\"ro\":[{\"id\":1}]},{\"id\":125127,\"date\":20110117,\"startTime\":1055,\"endTime\":1145,\"kl\":[{\"id\":71}],\"te\":[{\"id\":41}],\"su\":[{\"id\":19}],\"ro\":[{\"id\":31}]}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new SimpleTimetableRequest();
+            request.@params.id = 71;
+            request.@params.type = 1;
+
+            var result = await sut.GetTimetableAsync(request, "session");
+
+            Assert.True(result.result.Count == 2);
+        }
     }
 }
 

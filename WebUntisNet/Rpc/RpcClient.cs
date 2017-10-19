@@ -127,5 +127,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<SchoolYearsRequest, SchoolYearsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<TimetableResponse> GetTimetableAsync(SimpleTimetableRequest request, string sessionId)
+        {
+            return SendAsync<SimpleTimetableRequest, TimetableResponse>(_serviceUri, request, sessionId);
+        }
     }
 }
