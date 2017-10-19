@@ -1,59 +1,39 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
 using WebUntisNet.Rpc;
 using WebUntisNet.Rpc.Types;
 using WebUntisNet.Net;
-using Xunit;
 
 namespace WebUntisNet.Tests
 {
-    public class WhenGetTeachersIsExecuted : IDisposable
+    public class WhenGetTeachersIsExecuted
     {
         private RpcClient _client;
         private string _sessionId;
 
-        public WhenGetTeachersIsExecuted()
+        [SetUp]
+        public void BeforeTest()
         {
             _client = new RpcClient(new HttpClient(), "https://demo.webuntis.com/WebUntis/jsonrpc.do");
             var authRequest = new AuthenticationRequest("api", "api", "CLIENT");
             var authResponse = _client.AuthenticateAsync("demo_inf", authRequest).GetAwaiter().GetResult();
             _sessionId = authResponse.result.sessionId;
-
         }
-        
 
-        [Fact(Skip = "broken")]
+        [TearDown]
+        public void AfterTest()
+        {
+            _client.LogoutAsync(new LogoutRequest(), _sessionId);
+        }
+
+        [Test]
+        [Ignore("Test is broken")]
         public async Task DataShouldBeReturned()
         {
             var request = new TeachersRequest();
             var response = await _client.GetTeachersAsync(request, _sessionId);
 
-            Assert.Null(response.error);
+            Assert.IsNull(response.error);
         }
-
-        #region IDisposable Support
-        private bool disposed = false; 
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    _client.LogoutAsync(new LogoutRequest(), _sessionId);
-                }
-
-              
-
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            
-            Dispose(true);
-        }
-        #endregion
     }
 }
