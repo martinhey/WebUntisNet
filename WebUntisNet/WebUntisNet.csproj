@@ -2,12 +2,30 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Martin Hey</Authors>
+    <Company />
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/martinhey/WebUntisNet</RepositoryUrl>
+    <PackageId>TaurusSoft.WebUntisNet</PackageId>
+    <Description>A C# client to access WebUntis.</Description>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>lib\Newtonsoft.Json\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="lib\Newtonsoft.Json\netstandard2.0\Newtonsoft.Json.dll">
+      <PackagePath>lib\netstandard2.0\</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+  
+  
 </Project>
