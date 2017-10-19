@@ -3,7 +3,7 @@ dist: trusty
 sudo: required
 mono: none
 dotnet: 2.0.0
-install:
+script:
   - dotnet restore
-script:    
+after_success:
   - dotnet test
