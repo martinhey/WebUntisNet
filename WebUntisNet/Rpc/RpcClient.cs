@@ -132,5 +132,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<SimpleTimetableRequest, TimetableResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<ExamTypesResponse> GetExamTypesAsync(ExamTypesRequest request, string sessionId)
+        {
+            return SendAsync<ExamTypesRequest, ExamTypesResponse>(_serviceUri, request, sessionId);
+        }
     }
 }

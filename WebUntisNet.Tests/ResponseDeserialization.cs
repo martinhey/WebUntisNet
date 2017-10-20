@@ -246,6 +246,22 @@ namespace WebUntisNet.Tests
 
             Assert.True(result.result.Count == 2);
         }
+
+        [Fact]
+        public async Task CanDeserializeGetExamTypesResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":{}}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new ExamTypesRequest();
+
+            var result = await sut.GetExamTypesAsync(request, "session");
+        }
     }
 }
 
