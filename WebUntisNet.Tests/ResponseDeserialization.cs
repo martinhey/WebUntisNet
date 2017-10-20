@@ -262,6 +262,28 @@ namespace WebUntisNet.Tests
 
             var result = await sut.GetExamTypesAsync(request, "session");
         }
+
+        [Fact]
+        public async Task CanDeserializeGetExamsResult()
+        {
+            const string responseText =
+                "{ \"jsonrpc\": \"2.0\", \"id\": \"1\", \"result\": [{ \"id\": 1, \"classes\": [ 1 ], \"teachers\": [ 4 ], \"students\": [ 15, 23, 7, 8, 24, 16, 25, 1, 17, 9, 73, 26, 18, 2, 11, 3, 19, 28, 20, 21, 5, 6, 14, 22 ], \"subject\": 14, \"date\": 20140729, \"startTime\": 1425, \"endTime\": 1510 } ] }";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new ExamsRequest();
+            request.@params.examTypeId = 1;
+            request.@params.startDate = 20170101;
+            request.@params.endDate = 20171231;
+
+            var result = await sut.GetExamsAsync(request, "session");
+
+            Assert.True(result.result.Count == 1);
+            Assert.Equal(1510, result.result[0].endTime);
+        }
     }
 }
 
