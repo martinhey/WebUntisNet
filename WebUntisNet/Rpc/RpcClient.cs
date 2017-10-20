@@ -157,5 +157,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<PersonIdRequest, PersonIdResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<LatestImportTimeResponse> GetLatestImportTimeAsync(LatestImportTimeRequest request, string sessionId)
+        {
+            return SendAsync<LatestImportTimeRequest, LatestImportTimeResponse>(_serviceUri, request, sessionId);
+        }
     }
 }

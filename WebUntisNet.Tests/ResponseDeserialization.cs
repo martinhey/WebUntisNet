@@ -350,6 +350,25 @@ namespace WebUntisNet.Tests
             //Assert.True(result.result.Count == 7);
             Assert.Equal(6l, result.result.Value);
         }
+
+        [Fact]
+        public async Task CanDeserializeGetLatestImportTimeResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":4546346346}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new LatestImportTimeRequest();
+
+
+            var result = await sut.GetLatestImportTimeAsync(request, "session");
+
+            Assert.Equal(4546346346l, result.result.Value);
+        }
     }
 }
 
