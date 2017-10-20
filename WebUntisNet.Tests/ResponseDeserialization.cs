@@ -284,6 +284,27 @@ namespace WebUntisNet.Tests
             Assert.True(result.result.Count == 1);
             Assert.Equal(1510, result.result[0].endTime);
         }
+
+        [Fact]
+        public async Task CanDeserializeGetClassregResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":[{\"studentid\":\"100010\",\"surname\":\"Oban\",\"forname\":\"Tom\",\"date\":20121018,\"subject\":\"\",\"reason\":\"\",\"text\":\"eats during lesson\"}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new ClassregEventsRequest();
+            request.@params.startDate = 20170101;
+            request.@params.endDate = 20171231;
+
+            var result = await sut.GetClassregEventsAsync(request, "session");
+
+            Assert.True(result.result.Count == 1);
+            Assert.Equal("eats during lesson", result.result[0].text);
+        }
     }
 }
 

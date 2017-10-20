@@ -142,5 +142,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<ExamsRequest, ExamsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<ClassregEventsResponse> GetClassregEventsAsync(ClassregEventsRequest request, string sessionId)
+        {
+            return SendAsync<ClassregEventsRequest, ClassregEventsResponse>(_serviceUri, request, sessionId);
+        }
     }
 }
