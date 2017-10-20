@@ -152,5 +152,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<SubstitutionsRequest, SubstitutionsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<PersonIdResponse> GetPersonIdAsync(PersonIdRequest request, string sessionId)
+        {
+            return SendAsync<PersonIdRequest, PersonIdResponse>(_serviceUri, request, sessionId);
+        }
     }
 }

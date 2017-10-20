@@ -327,6 +327,29 @@ namespace WebUntisNet.Tests
             //Assert.True(result.result.Count == 7);
             Assert.Equal("cancel", result.result[0].type);
         }
+
+        [Fact]
+        public async Task CanDeserializeGetPersonIdResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":6}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new PersonIdRequest();
+            request.@params.sn = "Talisker";
+            request.@params.fn = "James";
+            request.@params.dob = 0;
+            request.@params.type = 5;
+
+            var result = await sut.GetPersonIdAsync(request, "session");
+
+            //Assert.True(result.result.Count == 7);
+            Assert.Equal(6l, result.result.Value);
+        }
     }
 }
 
