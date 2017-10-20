@@ -305,6 +305,28 @@ namespace WebUntisNet.Tests
             Assert.True(result.result.Count == 1);
             Assert.Equal("eats during lesson", result.result[0].text);
         }
+
+        [Fact]
+        public async Task CanDeserializeGetSubstitutionsResult()
+        {
+            const string responseText =
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":[{\"type\":\"cancel\",\"lsid\":3029,\"date\":20111110,\"startTime\":855,\"endTime\":945,\"kl\":[{\"id\":119}],\"te\":[{\"id\":7}],\"su\":[{\"id\":5}],\"ro\":[{\"id\":2}]},{\"type\":\"add\",\"lsid\":3064,\"date\":20111114,\"startTime\":1800,\"endTime\":1900,\"kl\":[{\"id\":122}],\"te\":[{\"id\":28}],\"su\":[{\"id\":8}],\"ro\":[]},{\"type\":\"shift\",\"lsid\":3087,\"date\":20111116,\"startTime\":1440,\"endTime\":1530},{\"reschedule\":{\"date\":20111115,\"startTime\":1155,\"endTime\":1245}},{\"kl\":[{\"id\":124}],\"te\":[{\"id\":3}],\"su\":[{\"id\":12}],\"ro\":[{\"id\":9}]},{\"type\":\"cancel\",\"lsid\":3087,\"date\":20111115,\"startTime\":1155,\"endTime\":1245},{\"reschedule\":{\"date\":20111116,\"startTime\":1440,\"endTime\":1530}},{\"kl\":[{\"id\":124}],\"te\":[{\"id\":3}],\"su\":[{\"id\":12}],\"ro\":[{\"id\":9}]},{\"type\":\"cancel\",\"lsid\":3091,\"date\":20111115,\"startTime\":1000,\"endTime\":1050,\"kl\":[{\"id\":124}],\"te\":[{\"id\":5}],\"su\":[{\"id\":20}],\"ro\":[{\"id\":34}]},{\"type\":\"subst\",\"lsid\":3111,\"date\":20111115,\"startTime\":800,\"endTime\":850,\"kl\":[{\"id\":126}],\"te\":[{\"id\":36,\"orgid\":5}],\"su\":[{\"id\":20}],\"ro\":[{\"id\":34}]},{\"type\":\"rmchg\",\"lsid\":3238,\"date\":20111115,\"startTime\":1000,\"endTime\":1050,\"txt\":\"Raumänderung\",\"kl\":[{\"id\":132},{\"id\":131}],\"te\":[{\"id\":3}],\"su\":[{\"id\":3}],\"ro\":[{\"id\":39,\"orgid\":26}]}]}";
+
+            var httpClient = A.Fake<IHttpClient>();
+            A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._))
+                .Returns(Task.FromResult(responseText));
+
+            var sut = new RpcClient(httpClient, "http://localhost");
+            var request = new SubstitutionsRequest();
+            request.@params.startDate = 20170101;
+            request.@params.endDate = 20171231;
+            request.@params.departmentId = 0;
+
+            var result = await sut.GetSubstitutionsAsync(request, "session");
+
+            //Assert.True(result.result.Count == 7);
+            Assert.Equal("cancel", result.result[0].type);
+        }
     }
 }
 

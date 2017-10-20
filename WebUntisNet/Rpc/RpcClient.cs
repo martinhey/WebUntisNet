@@ -147,5 +147,10 @@ namespace WebUntisNet.Rpc
         {
             return SendAsync<ClassregEventsRequest, ClassregEventsResponse>(_serviceUri, request, sessionId);
         }
+
+        public Task<SubstitutionsResponse> GetSubstitutionsAsync(SubstitutionsRequest request, string sessionId)
+        {
+            return SendAsync<SubstitutionsRequest, SubstitutionsResponse>(_serviceUri, request, sessionId);
+        }
     }
 }
