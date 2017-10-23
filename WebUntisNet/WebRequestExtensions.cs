@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebUntisNet
 {
     internal static class WebRequestExtensions
     {
-        internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout)
+        internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout, CancellationToken token = default(CancellationToken))
         {
-            return Task.Factory.StartNew<WebResponse>(() =>
+            // TODO: handle cancellation token
+            var t = Task.Factory.FromAsync(
+                request.BeginGetResponse,
+                request.EndGetResponse,
+                null);
+            return Task.Factory.StartNew(() =>
             {
-                var t = Task.Factory.FromAsync<WebResponse>(
-                    request.BeginGetResponse,
-                    request.EndGetResponse,
-                    null);
-
                 if (!t.Wait(timeout)) throw new TimeoutException();
 
                 return t.Result;

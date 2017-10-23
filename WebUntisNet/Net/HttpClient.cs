@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebUntisNet.Net
 {
     public class HttpClient : IHttpClient
     {
-        public async Task<string> SendAsync(Uri uri, string request, string sessionId, int timeOut)
+        public async Task<string> SendAsync(Uri uri, string request, string sessionId, int timeOut, CancellationToken token = default(CancellationToken))
         {
 
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
