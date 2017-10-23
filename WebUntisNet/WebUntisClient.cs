@@ -85,7 +85,7 @@ namespace WebUntisNet
         /// <param name="endDate">The end date (only date part is relevant).</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns>A list of exams.</returns>
-        public async Task<List<Exam>> GetExamsAsync(int examTypeId, DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
+        public async Task<List<Types.Exam>> GetExamsAsync(int examTypeId, DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
         {
             if (!IsLoggedIn)
             {
@@ -100,7 +100,7 @@ namespace WebUntisNet
                 throw new RpcException(rpcResult.error.code, rpcResult.error.message);
             }
 
-            var result = rpcResult.result.Select(x => new Exam
+            var result = rpcResult.result.Select(x => new Types.Exam
             {
                 Id = x.id,
                 ClassesIds = x.classes,
@@ -111,6 +111,34 @@ namespace WebUntisNet
                 EndTime = TypeConverter.ApiDateAndTimeToDateTime(x.date, x.endTime)
             })
             .ToList();
+            return result;
+        }
+
+        public async Task<List<Types.Teacher>> GetTeachersAsync(CancellationToken token = default(CancellationToken))
+        {
+            if (!IsLoggedIn)
+            {
+                throw new NotAutenticatedException();
+            }
+
+            var rpcRequest = new TeachersRequest();
+            var rpcResult = await _rpcClient.GetTeachersAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.Teacher
+            {
+                    Id = x.id,
+                    Abbreviation = x.name,
+                    BackColor = x.backColor,
+                    FirstName = x.foreName,
+                    LastName = x.longName,
+                    ForeColor = x.foreColor
+                })
+                .ToList();
             return result;
         }
 

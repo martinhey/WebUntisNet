@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebUntisNet
+namespace WebUntisNet.Types
 {
     public class Exam
     {
