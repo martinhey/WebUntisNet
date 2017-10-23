@@ -29,6 +29,7 @@ namespace WebUntisNet.Rpc
 
         public int Timeout { get; set; }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public async Task<AuthenticationResponse> AuthenticateAsync(string schoolName, AuthenticationRequest request)
         {
             if (string.IsNullOrEmpty(schoolName))
@@ -46,11 +47,13 @@ namespace WebUntisNet.Rpc
             return await SendAsync<AuthenticationRequest, AuthenticationResponse>(requestUri, request, null);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<EmptyResponse> LogoutAsync(LogoutRequest request, string sessionId)
         {
             return SendAsync<LogoutRequest, EmptyResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<TeachersResponse> GetTeachersAsync(TeachersRequest request, string sessionId)
         {
             return SendAsync<TeachersRequest, TeachersResponse>(_serviceUri, request, sessionId);
@@ -60,7 +63,6 @@ namespace WebUntisNet.Rpc
         {
             return _httpClient.SendAsync(uri, request, sessionId, Timeout);
         }
-
 
         private async Task<TResult> SendAsync<TRequest, TResult>(Uri uri, TRequest request, string sessionId) 
             where TRequest : IRpcRequest 
@@ -78,86 +80,103 @@ namespace WebUntisNet.Rpc
             return JsonConvert.DeserializeObject<TResult>(responseText);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<StudentsResponse> GetStudentsAsync(StudentsRequest request, string sessionId)
         {
             return SendAsync<StudentsRequest, StudentsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<ClassesResponse> GetClassesAsync(ClassesRequest request, string sessionId)
         {
             return SendAsync<ClassesRequest, ClassesResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<SubjectsResponse> GetSubjectsAsync(SubjectsRequest request, string sessionId)
         {
             return SendAsync<SubjectsRequest, SubjectsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<RoomsResponse> GetRoomsAsync(RoomsRequest request, string sessionId)
         {
             return SendAsync<RoomsRequest, RoomsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<DepartmentsResponse> GetDepartmentsAsync(DepartmentsRequest request, string sessionId)
         {
             return SendAsync<DepartmentsRequest, DepartmentsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<HolidaysResponse> GetHolidaysAsync(HolidaysRequest request, string sessionId)
         {
             return SendAsync<HolidaysRequest, HolidaysResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<TimegridResponse> GetTimegridAsync(TimegridRequest request, string sessionId)
         {
             return SendAsync<TimegridRequest, TimegridResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<StatusDataResponse> GetStatusDataAsync(StatusDataRequest request, string sessionId)
         {
             return SendAsync<StatusDataRequest, StatusDataResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<SchoolYearsResponse> GetCurrentSchoolYearAsync(CurrentSchoolYearRequest request, string sessionId)
         {
             return SendAsync<CurrentSchoolYearRequest, SchoolYearsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<SchoolYearsResponse> GetSchoolYearsAsync(SchoolYearsRequest request, string sessionId)
         {
             return SendAsync<SchoolYearsRequest, SchoolYearsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<TimetableResponse> GetTimetableAsync(SimpleTimetableRequest request, string sessionId)
         {
             return SendAsync<SimpleTimetableRequest, TimetableResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<ExamTypesResponse> GetExamTypesAsync(ExamTypesRequest request, string sessionId)
         {
             return SendAsync<ExamTypesRequest, ExamTypesResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<ExamsResponse> GetExamsAsync(ExamsRequest request, string sessionId)
         {
             return SendAsync<ExamsRequest, ExamsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<ClassregEventsResponse> GetClassregEventsAsync(ClassregEventsRequest request, string sessionId)
         {
             return SendAsync<ClassregEventsRequest, ClassregEventsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<SubstitutionsResponse> GetSubstitutionsAsync(SubstitutionsRequest request, string sessionId)
         {
             return SendAsync<SubstitutionsRequest, SubstitutionsResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<PersonIdResponse> GetPersonIdAsync(PersonIdRequest request, string sessionId)
         {
             return SendAsync<PersonIdRequest, PersonIdResponse>(_serviceUri, request, sessionId);
         }
 
+        /// <inheritdoc cref="IRpcClient"/>
         public Task<LatestImportTimeResponse> GetLatestImportTimeAsync(LatestImportTimeRequest request, string sessionId)
         {
             return SendAsync<LatestImportTimeRequest, LatestImportTimeResponse>(_serviceUri, request, sessionId);

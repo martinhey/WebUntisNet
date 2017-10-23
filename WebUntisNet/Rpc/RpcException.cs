@@ -5,9 +5,17 @@ namespace WebUntisNet.Rpc
 {
     public class RpcException : Exception
     {
+        public int ErrorCode { get; private set; }
+
         public RpcException()
         {
         }
+
+        public RpcException(int code, string message) : this(message)
+        {
+            ErrorCode = code;
+        }
+
 
         public RpcException(string message) : base(message)
         {

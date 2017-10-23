@@ -33,9 +33,9 @@ namespace WebUntisNet
             var request = new AuthenticationRequest(userName, password, clientName);
             var result = await _rpcClient.AuthenticateAsync(schoolName, request);
 
-            if (!string.IsNullOrEmpty(result?.error?.message))
+            if (result?.error.code != null)
             {
-                throw new RpcException(result.error.message);
+                throw new RpcException(result.error.code, result.error.message);
             }
 
             _sessionId = result.result.sessionId;
