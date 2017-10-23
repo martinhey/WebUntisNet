@@ -87,10 +87,7 @@ namespace WebUntisNet
         /// <returns>A list of exams.</returns>
         public async Task<List<Types.Exam>> GetExamsAsync(int examTypeId, DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
         {
-            if (!IsLoggedIn)
-            {
-                throw new NotAutenticatedException();
-            }
+            EnsureLoggedIn();
 
             var rpcRequest = new ExamsRequest(examTypeId, startDate.ToApiDate(), endDate.ToApiDate());
             var rpcResult = await _rpcClient.GetExamsAsync(rpcRequest, _sessionId, token);
@@ -114,12 +111,14 @@ namespace WebUntisNet
             return result;
         }
 
+        /// <summary>
+        /// Gets a list of all teachers.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of teachers.</returns>
         public async Task<List<Types.Teacher>> GetTeachersAsync(CancellationToken token = default(CancellationToken))
         {
-            if (!IsLoggedIn)
-            {
-                throw new NotAutenticatedException();
-            }
+            EnsureLoggedIn();
 
             var rpcRequest = new TeachersRequest();
             var rpcResult = await _rpcClient.GetTeachersAsync(rpcRequest, _sessionId, token);
@@ -140,6 +139,46 @@ namespace WebUntisNet
                 })
                 .ToList();
             return result;
+        }
+
+        /// <summary>
+        /// Gets a list of all students.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of students.</returns>
+        public async Task<List<Types.Student>> GetStudentsAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new StudentsRequest();
+            var rpcResult = await _rpcClient.GetStudentsAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.Student
+                {
+                    Id = x.id,
+                    Key = x.key,
+                    Abbreviation = x.name,
+                    FirstName = x.foreName,
+                    LastName = x.longName,
+                    Gender = "male".Equals(x.gender) ? Gender.Male : Gender.Female
+                })
+                .ToList();
+            return result;
+        }
+
+        private void EnsureLoggedIn()
+        {
+            if (IsLoggedIn)
+            {
+                return;
+            }
+
+            throw new NotAutenticatedException();
         }
 
         /// <summary>

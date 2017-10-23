@@ -7,8 +7,6 @@
         public string key { get; set; }
         public string foreName { get; set; }
         public string longName { get; set; }
-
         public string gender { get; set; }
-
     }
 }
