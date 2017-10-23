@@ -1,4 +1,4 @@
-﻿namespace WebUntisNet
+﻿namespace WebUntisNet.Types
 {
     public enum PersonType
     {

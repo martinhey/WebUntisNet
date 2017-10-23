@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WebUntisNet.Net;
 using WebUntisNet.Rpc;
 using WebUntisNet.Rpc.Types;
+using WebUntisNet.Types;
 
 namespace WebUntisNet
 {
@@ -74,15 +77,41 @@ namespace WebUntisNet
             PersonId = null;
         }
 
-        public async Task GetExamsAsync(int examTypeId, DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
+        /// <summary>
+        /// Gets all exams for an exam type within the specified time range.
+        /// </summary>
+        /// <param name="examTypeId">The exam type id.</param>
+        /// <param name="startDate">The start date (only date part is relevant).</param>
+        /// <param name="endDate">The end date (only date part is relevant).</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of exams.</returns>
+        public async Task<List<Exam>> GetExamsAsync(int examTypeId, DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
         {
             if (!IsLoggedIn)
             {
                 throw new NotAutenticatedException();
             }
 
-            var request = new ExamsRequest(examTypeId, startDate.ToApiDate(), endDate.ToApiDate());
-            await _rpcClient.GetExamsAsync(request, _sessionId, token);
+            var rpcRequest = new ExamsRequest(examTypeId, startDate.ToApiDate(), endDate.ToApiDate());
+            var rpcResult = await _rpcClient.GetExamsAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Exam
+            {
+                Id = x.id,
+                ClassesIds = x.classes,
+                StudentIds = x.students,
+                SubjectId = x.subject,
+                TeacherIds = x.teachers,
+                StartTime = TypeConverter.ApiDateAndTimeToDateTime(x.date, x.startTime),
+                EndTime = TypeConverter.ApiDateAndTimeToDateTime(x.date, x.endTime)
+            })
+            .ToList();
+            return result;
         }
 
         /// <summary>
