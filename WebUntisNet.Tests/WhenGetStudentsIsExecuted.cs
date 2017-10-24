@@ -6,8 +6,7 @@ namespace WebUntisNet.Tests
 {
     public class WhenGetStudentsIsExecuted 
     {
-        [Fact]
-        //[Fact(Skip = "no user with sufficient rights")]
+        [Fact(Skip = "no user with sufficient rights")]
         public async Task DataShouldBeReturned()
         {
             var client = new WebUntisClient("https://demo.webuntis.com/WebUntis/jsonrpc.do", "demo_inf", "Lehrer", "", "CLIENT");
