@@ -201,6 +201,55 @@ namespace WebUntisNet
             return result;
         }
 
+
+        /// <summary>
+        /// Gets a list of all rooms.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of rooms.</returns>
+        public async Task<List<Types.Room>> GetRoomsAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new RoomsRequest();
+            var rpcResult = await _rpcClient.GetRoomsAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.Room
+                {
+                    Id = x.id,
+                    LongName = x.longName,
+                    ForeColorHex = x.foreColor,
+                    BackColorHex = x.backColor,
+                    Name = x.name
+                })
+                .ToList();
+            return result;
+        }
+
+
+        // TODO: GetSubjectsAsync
+        // TODO: GetDepartmentsAsync
+        // TODO: GetHolidaysAsync
+        // TODO: GetTimegridAsync
+        // TODO: GetStatusDataAsync
+        // TODO: GetCurrentSchoolYearAsync
+        // TODO: GetSchoolYearsAsync
+        // TODO: GetTimetableAsync
+
+        // TODO: Request timetable for an element (customizable)
+
+        // TODO: GetLatestImportTimeAsync
+        // TODO: GetPersonIdAsync
+        // TODO: GetSubstitutionsAsync
+        // TODO: GetClassregEventsAsync
+        // TODO: GetExamTypesAsync
+
+
         private void EnsureLoggedIn()
         {
             if (IsLoggedIn)
