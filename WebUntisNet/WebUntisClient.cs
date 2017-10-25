@@ -55,6 +55,36 @@ namespace WebUntisNet
         }
 
         /// <summary>
+        /// Gets all classes for school year.
+        /// </summary>
+        /// <param name="schoolYearId">The school year id.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of classes.</returns>
+        public async Task<List<Types.Class>> GetClassesAsync(int schoolYearId, CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new ClassesRequest(schoolYearId.ToString());
+            var rpcResult = await _rpcClient.GetClassesAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.Class
+                {
+                    Id = x.id,
+                    Name = x.name,
+                    LongName = x.longName,
+                    BackColorHex = x.backColor,
+                    ForeColorHex = x.foreColor
+                })
+                .ToList();
+            return result;
+        }
+
+        /// <summary>
         /// Ends the current session.
         /// </summary>
         /// <param name="token"></param>
@@ -129,7 +159,7 @@ namespace WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Teacher
-            {
+                {
                     Id = x.id,
                     Abbreviation = x.name,
                     BackColor = x.backColor,
