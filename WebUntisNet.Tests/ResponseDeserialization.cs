@@ -77,7 +77,7 @@ namespace WebUntisNet.Tests
                 .Returns(Task.FromResult(responseText));
 
             var sut = new RpcClient(httpClient, "http://localhost");
-            var result = await sut.GetClassesAsync(new ClassesRequest(), "session");
+            var result = await sut.GetClassesAsync(new ClassesRequest("1"), "session");
 
             Assert.True(result.result.Count == 2);
             Assert.True(result.result[0].name == "1A");
