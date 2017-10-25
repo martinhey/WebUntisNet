@@ -232,9 +232,37 @@ namespace WebUntisNet
         }
 
 
+        /// <summary>
+        /// Gets a list of all holidays.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of holidays.</returns>
+        public async Task<List<Types.Holiday>> GetHolidaysAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new HolidaysRequest();
+            var rpcResult = await _rpcClient.GetHolidaysAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.Holiday
+                {
+                    Id = x.id,
+                    LongName = x.longName,
+                    Name = x.name,
+                    StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
+                    EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
+                })
+                .ToList();
+            return result;
+        }
+
         // TODO: GetSubjectsAsync
         // TODO: GetDepartmentsAsync
-        // TODO: GetHolidaysAsync
         // TODO: GetTimegridAsync
         // TODO: GetStatusDataAsync
         // TODO: GetCurrentSchoolYearAsync

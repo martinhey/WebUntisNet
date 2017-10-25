@@ -28,5 +28,11 @@ namespace WebUntisNet
 
             return new DateTime(year, month, day, hour, minute, 0);
         }
+
+        public static DateTime ApiDateToDateTime(int date)
+        {
+            return ApiDateAndTimeToDateTime(date, 0);
+        }
+
     }
 }
