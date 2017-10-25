@@ -261,8 +261,34 @@ namespace WebUntisNet
             return result;
         }
 
+        /// <summary>
+        /// Gets a list of all departments.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of departments.</returns>
+        public async Task<List<Types.Department>> GetDepartmentsAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new DepartmentsRequest();
+            var rpcResult = await _rpcClient.GetDepartmentsAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.Department
+                {
+                    Id = x.id,
+                    LongName = x.longName,
+                    Name = x.name
+                })
+                .ToList();
+            return result;
+        }
+
         // TODO: GetSubjectsAsync
-        // TODO: GetDepartmentsAsync
         // TODO: GetTimegridAsync
         // TODO: GetStatusDataAsync
         // TODO: GetCurrentSchoolYearAsync
