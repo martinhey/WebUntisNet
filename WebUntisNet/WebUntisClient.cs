@@ -375,8 +375,33 @@ namespace WebUntisNet
         // TODO: GetStatusDataAsync
 
 
+        /// <summary>
+        /// Gets the current school year.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The current school year.</returns>
+        public async Task<Types.SchoolYear> GetCurrentSchoolYearAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
 
-        // TODO: GetCurrentSchoolYearAsync
+            var rpcRequest = new CurrentSchoolYearRequest();
+            var rpcResult = await _rpcClient.GetCurrentSchoolYearAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.SchoolYear
+                {
+                    Id = x.id,
+                    Name = x.name,
+                    StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
+                    EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
+                }).FirstOrDefault();
+            return result;
+        }
+
 
 
         /// <summary>
