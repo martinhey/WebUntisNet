@@ -112,7 +112,7 @@ namespace WebUntisNet.Rpc
         /// <param name="sessionId">The session id returned by <see cref="AuthenticateAsync"/>.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns>The rpc response.</returns>
-        Task<SchoolYearsResponse> GetCurrentSchoolYearAsync(CurrentSchoolYearRequest request, string sessionId, CancellationToken token = default(CancellationToken));
+        Task<SchoolYearResponse> GetCurrentSchoolYearAsync(CurrentSchoolYearRequest request, string sessionId, CancellationToken token = default(CancellationToken));
 
         /// <summary>
         /// List of all available schoolyears.

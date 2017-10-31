@@ -198,7 +198,7 @@ namespace WebUntisNet.Tests
         public async Task CanDeserializeGetCurrentSchoolYearResult()
         {
             const string responseText =
-                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":[{\"id\":10,\"name\":\"2010/2011\",\"startDate\":20100830,\"endDate\":20110731}]}";
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":{\"id\":10,\"name\":\"2010/2011\",\"startDate\":20100830,\"endDate\":20110731}}";
 
             var httpClient = A.Fake<IHttpClient>();
             A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._, A<CancellationToken>._))
@@ -207,8 +207,7 @@ namespace WebUntisNet.Tests
             var sut = new RpcClient(httpClient, "http://localhost");
             var result = await sut.GetCurrentSchoolYearAsync(new CurrentSchoolYearRequest(), "session");
 
-            Assert.True(result.result.Count == 1);
-            Assert.True(result.result[0].name == "2010/2011");
+            Assert.True(result.result.name == "2010/2011");
         }
 
         [Fact]

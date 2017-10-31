@@ -392,13 +392,13 @@ namespace WebUntisNet
                 throw new RpcException(rpcResult.error.code, rpcResult.error.message);
             }
 
-            var result = rpcResult.result.Select(x => new Types.SchoolYear
+            var result = new Types.SchoolYear
                 {
-                    Id = x.id,
-                    Name = x.name,
-                    StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
-                    EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
-                }).FirstOrDefault();
+                    Id = rpcResult.result.id,
+                    Name = rpcResult.result.name,
+                    StartDate = TypeConverter.ApiDateToDateTime(rpcResult.result.startDate),
+                    EndDate = TypeConverter.ApiDateToDateTime(rpcResult.result.endDate)
+                };
             return result;
         }
 
