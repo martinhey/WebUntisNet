@@ -32,8 +32,8 @@ namespace WebUntisNet
 
             if (date > 0)
             {
-                year = date / 100000; // dvision without fraction
-                date -= year * 100000;
+                year = date / 10000; // dvision without fraction
+                date -= year * 10000;
                 month = date / 100; // dvision without fraction
                 date -= month * 100;
                 day = date;

@@ -371,10 +371,43 @@ namespace WebUntisNet
             return result;
         }
 
-        // TODO: GetTimegridAsync
+
         // TODO: GetStatusDataAsync
+
+
+
         // TODO: GetCurrentSchoolYearAsync
-        // TODO: GetSchoolYearsAsync
+
+
+        /// <summary>
+        /// Gets a list of all school years.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of school years.</returns>
+        public async Task<List<Types.SchoolYear>> GetSchoolYearsAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new SchoolYearsRequest();
+            var rpcResult = await _rpcClient.GetSchoolYearsAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.SchoolYear
+                {
+                        Id = x.id,
+                        Name = x.name,
+                        StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
+                        EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
+                })
+                .ToList();
+            return result;
+        }
+
+
         // TODO: GetTimetableAsync
 
         // TODO: Request timetable for an element (customizable)
