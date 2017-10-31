@@ -317,8 +317,36 @@ namespace WebUntisNet
             return result;
         }
 
+        /// <summary>
+        /// Gets a list of all timegrid items.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list all timegrid items.</returns>
+        public async Task<List<Types.TimegridItem>> GetTimegridAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
 
-        // TODO: GetSubjectsAsync
+            var rpcRequest = new TimegridRequest();
+            var rpcResult = await _rpcClient.GetTimegridAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Types.TimegridItem
+                {
+                    Day = TypeConverter.ApiDayOfWeekToDayOfWeek(x.day),
+                    TimeUnits = new List<TimegridUnit>(x.timeUnits.Select(y => new TimegridUnit
+                    {
+                       StartTime = TypeConverter.ApiTimeToDateTime(y.startTime),
+                       EndTime = TypeConverter.ApiTimeToDateTime(y.endTime)
+                    }))
+                })
+                .ToList();
+            return result;
+        }
+
         // TODO: GetTimegridAsync
         // TODO: GetStatusDataAsync
         // TODO: GetCurrentSchoolYearAsync
