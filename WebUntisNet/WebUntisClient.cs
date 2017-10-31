@@ -403,7 +403,6 @@ namespace WebUntisNet
         }
 
 
-
         /// <summary>
         /// Gets a list of all school years.
         /// </summary>
@@ -437,7 +436,31 @@ namespace WebUntisNet
 
         // TODO: Request timetable for an element (customizable)
 
-        // TODO: GetLatestImportTimeAsync
+        /// <summary>
+        /// Gets the latest import time.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The date of the latest import time.</returns>
+        public async Task<DateTime> GetLatestImportTimeAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new LatestImportTimeRequest();
+            var rpcResult = await _rpcClient.GetLatestImportTimeAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+
+            long unixTime = (long)rpcResult.result.Value;
+            var result = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            result = result.AddMilliseconds(unixTime);
+
+            return result;
+        }
+
         // TODO: GetPersonIdAsync
         // TODO: GetSubstitutionsAsync
         // TODO: GetClassregEventsAsync
