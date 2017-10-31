@@ -28,10 +28,25 @@ namespace WebUntisNet
         /// </summary>
         public int? PersonId { get; private set; }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="WebUntisClient"/>
+        /// </summary>
+        /// <param name="serviceEndpoint">The url of the RPC interface (ends with '/jsonrpc.do').</param>
+        /// <param name="schoolName">The name of thte school.</param>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
         public WebUntisClient(string serviceEndpoint, string schoolName, string userName, string password) : this(serviceEndpoint, schoolName, userName, password, DefaultClientName)
         {
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="WebUntisClient"/>
+        /// </summary>
+        /// <param name="serviceEndpoint">The url of the RPC interface (ends with '/jsonrpc.do').</param>
+        /// <param name="schoolName">The name of thte school.</param>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="clientName">The client app name.</param>
         public WebUntisClient(string serviceEndpoint, string schoolName, string userName, string password, string clientName)
         {
             _rpcClient = new RpcClient(new HttpClient(), serviceEndpoint);
@@ -39,6 +54,15 @@ namespace WebUntisNet
             AuthenticateAsync(schoolName, userName, password, clientName).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// Authenticates the user.
+        /// </summary>
+        /// <param name="schoolName">The name of the school.</param>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="clientName">The client application name.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>Sets the session id and the user properties.</returns>
         public async Task AuthenticateAsync(string schoolName, string userName, string password, string clientName, CancellationToken token = default(CancellationToken))
         {
             var request = new AuthenticationRequest(userName, password, clientName);
