@@ -461,7 +461,29 @@ namespace WebUntisNet
             return result;
         }
 
-        // TODO: GetPersonIdAsync
+        /// <summary>
+        /// Gets the person id for a search request.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The person id.</returns>
+        public async Task<int?> GetPersonIdAsync(PersonType type, string lastName, string firstName, DateTime? dateOfBirth, CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var dob = dateOfBirth.HasValue ? TypeConverter.DateTimeToApiDate(dateOfBirth.Value) : 0;
+            var rpcRequest = new PersonIdRequest((int)type, lastName, firstName, dob);
+            var rpcResult = await _rpcClient.GetPersonIdAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = (int)rpcResult.result.Value;
+            return result != 0 ? result : (int?)null;
+        }
+
+
         // TODO: GetSubstitutionsAsync
         // TODO: GetClassregEventsAsync
 
