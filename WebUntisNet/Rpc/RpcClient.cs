@@ -130,9 +130,9 @@ namespace WebUntisNet.Rpc
         }
 
         /// <inheritdoc cref="IRpcClient"/>
-        public Task<SchoolYearResponse> GetCurrentSchoolYearAsync(CurrentSchoolYearRequest request, string sessionId, CancellationToken token = default(CancellationToken))
+        public Task<CurrentSchoolYearResponse> GetCurrentSchoolYearAsync(CurrentSchoolYearRequest request, string sessionId, CancellationToken token = default(CancellationToken))
         {
-            return SendAsync<CurrentSchoolYearRequest, SchoolYearResponse>(_serviceUri, request, sessionId, token);
+            return SendAsync<CurrentSchoolYearRequest, CurrentSchoolYearResponse>(_serviceUri, request, sessionId, token);
         }
 
         /// <inheritdoc cref="IRpcClient"/>

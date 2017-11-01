@@ -348,7 +348,7 @@ namespace WebUntisNet.Tests
             var result = await sut.GetPersonIdAsync(request, "session");
 
             //Assert.True(result.result.Count == 7);
-            Assert.Equal(6l, result.result.Value);
+            Assert.Equal(6L, result.result.Value);
         }
 
         [Fact]
@@ -367,9 +367,7 @@ namespace WebUntisNet.Tests
 
             var result = await sut.GetLatestImportTimeAsync(request, "session");
 
-            Assert.Equal(4546346346l, result.result.Value);
+            Assert.Equal(4_546_346_346L, result.result.Value);
         }
     }
 }
-
-

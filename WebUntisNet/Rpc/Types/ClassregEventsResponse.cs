@@ -1,6 +1,11 @@
-﻿namespace WebUntisNet.Rpc.Types
+﻿using System.Collections.Generic;
+
+namespace WebUntisNet.Rpc.Types
 {
-    public class ClassregEventsResponse : RpcResponse<ClassregEventsResponseResult>
+    public class ClassregEventsResponse : RpcResponse<ClassregEventsResponse.ResponseResult>
     {
+        public class ResponseResult : List<ClassregEvent>, IRpcResponseResult
+        {
+        }
     }
 }

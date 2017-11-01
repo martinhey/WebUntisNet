@@ -1,6 +1,6 @@
 ﻿namespace WebUntisNet.Rpc.Types
 {
-    public class ClassesRequest : RpcRequest<ClassesRequestParams>
+    public class ClassesRequest : RpcRequest<ClassesRequest.RequestParams>
     {
         public ClassesRequest(string schoolyearId) : base()
         {
@@ -9,5 +9,11 @@
 
         public override string id => "5";
         public override string method => "getKlassen";
+
+
+        public class RequestParams : IRpcRequestParams
+        {
+            public string schoolyearId { get; set; }
+        }
     }
 }

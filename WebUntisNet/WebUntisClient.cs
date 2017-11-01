@@ -465,6 +465,29 @@ namespace WebUntisNet
         // TODO: GetSubstitutionsAsync
         // TODO: GetClassregEventsAsync
         // TODO: GetExamTypesAsync
+        public async Task GetExamTypesAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new ExamTypesRequest();
+            var rpcResult = await _rpcClient.GetExamTypesAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            //var result = rpcResult.result.Select(x => new Types.SchoolYear
+            //    {
+            //        Id = x.id,
+            //        Name = x.name,
+            //        StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
+            //        EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
+            //    })
+            //    .ToList();
+            //return result;
+
+        }
 
 
         private void EnsureLoggedIn()
