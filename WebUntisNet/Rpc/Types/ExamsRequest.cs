@@ -1,13 +1,13 @@
 ﻿namespace WebUntisNet.Rpc.Types
 {
-    public class ExamsRequest : RpcRequest<ExamsRequestParams>
+    public class ExamsRequest : RpcRequest<ExamsRequest.RequestParams>
     {
-        public ExamsRequest() : base()
+        public ExamsRequest()
         {
             
         }
 
-        public ExamsRequest(int examTypeId, int startDate, int endDate) : base()
+        public ExamsRequest(int examTypeId, int startDate, int endDate)
         {
             @params.startDate = startDate;
             @params.endDate = endDate;
@@ -16,5 +16,13 @@
 
         public override string id => "21";
         public override string method => "getExams";
+
+
+        public class RequestParams : IRpcRequestParams
+        {
+            public int examTypeId { get; set; }
+            public int startDate { get; set; }
+            public int endDate { get; set; }
+        }
     }
 }

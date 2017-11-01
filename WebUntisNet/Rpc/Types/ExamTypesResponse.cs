@@ -1,6 +1,11 @@
-﻿namespace WebUntisNet.Rpc.Types
+﻿using System.Collections.Generic;
+
+namespace WebUntisNet.Rpc.Types
 {
-    public class ExamTypesResponse : RpcResponse<ExamTypesResponseResult>
+    public class ExamTypesResponse : RpcResponse<ExamTypesResponse.ResponseResult>
     {
+        public class ResponseResult : List<ExamType>, IRpcResponseResult
+        {
+        }
     }
 }
