@@ -464,8 +464,14 @@ namespace WebUntisNet
         // TODO: GetPersonIdAsync
         // TODO: GetSubstitutionsAsync
         // TODO: GetClassregEventsAsync
-        // TODO: GetExamTypesAsync
-        public async Task GetExamTypesAsync(CancellationToken token = default(CancellationToken))
+
+
+        /// <summary>
+        /// Gets a list of all exam types.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>A list of exam types.</returns>
+        public async Task<List<Types.ExamType>> GetExamTypesAsync(CancellationToken token = default(CancellationToken))
         {
             EnsureLoggedIn();
 
@@ -477,16 +483,12 @@ namespace WebUntisNet
                 throw new RpcException(rpcResult.error.code, rpcResult.error.message);
             }
 
-            //var result = rpcResult.result.Select(x => new Types.SchoolYear
-            //    {
-            //        Id = x.id,
-            //        Name = x.name,
-            //        StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
-            //        EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
-            //    })
-            //    .ToList();
-            //return result;
-
+            var result = rpcResult.result.Select(x => new Types.ExamType
+                {
+                    // TODO: map properties
+                })
+                .ToList();
+            return result;
         }
 
 
