@@ -1,6 +1,11 @@
-﻿namespace WebUntisNet.Rpc.Types
+﻿using System.Collections.Generic;
+
+namespace WebUntisNet.Rpc.Types
 {
-    public class TimetableResponse : RpcResponse<TimetableResponseResult>
+    public class TimetableResponse : RpcResponse<TimetableResponse.ResponseResult>
     {
+        public class ResponseResult : List<Period>, IRpcResponseResult
+        {
+        }
     }
 }

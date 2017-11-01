@@ -1,6 +1,11 @@
-﻿namespace WebUntisNet.Rpc.Types
+﻿using System.Collections.Generic;
+
+namespace WebUntisNet.Rpc.Types
 {
-    public class TimegridResponse : RpcResponse<TimegridResponseResult>
+    public class TimegridResponse : RpcResponse<TimegridResponse.ResponseResult>
     {
+        public class ResponseResult : List<TimegridItem>, IRpcResponseResult
+        {
+        }
     }
 }
