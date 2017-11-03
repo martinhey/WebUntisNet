@@ -296,10 +296,8 @@ namespace WebUntisNet.Tests
                 .Returns(Task.FromResult(responseText));
 
             var sut = new RpcClient(httpClient, "http://localhost");
-            var request = new ClassregEventsRequest();
-            request.@params.startDate = 20170101;
-            request.@params.endDate = 20171231;
-
+            var request = new ClassregEventsRequest(20170101, 20171231);
+   
             var result = await sut.GetClassregEventsAsync(request, "session");
 
             Assert.True(result.result.Count == 1);

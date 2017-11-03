@@ -424,8 +424,6 @@ namespace WebUntisNet
             };
         }
 
-
-
         /// <summary>
         /// Gets the current school year.
         /// </summary>
@@ -537,7 +535,31 @@ namespace WebUntisNet
 
         // TODO: GetSubstitutionsAsync
         // TODO: GetClassregEventsAsync
+        public async Task<List<Event>> GetClassRegEvents(DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
 
+            var rpcRequest = new ClassregEventsRequest(TypeConverter.DateTimeToApiDate(startDate), TypeConverter.DateTimeToApiDate(endDate));
+            var rpcResult = await _rpcClient.GetClassregEventsAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = rpcResult.result.Select(x => new Event
+                {
+                    StudentId = int.Parse(x.studentid),
+                    Subject = x.subject,
+                    FirstName = x.forname,
+                    LastName = x.surname,
+                    Date = TypeConverter.ApiDateToDateTime(x.date),
+                    Reason = x.reason,
+                    Text = x.text
+                })
+                .ToList();
+            return result;
+        }
 
         /// <summary>
         /// Gets a list of all exam types.
