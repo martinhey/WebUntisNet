@@ -409,6 +409,12 @@ namespace WebUntisNet
             return result;
         }
 
+        /// <summary>
+        /// Extracts the color combination with the given key from the list.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="key"></param>
+        /// <returns>The color combination.</returns>
         private ColorCombination ExtractColorCombinationFromStatusData(List<Dictionary<string, ColorAssignment>> list, string key)
         {
             var item = list.FirstOrDefault(x => x.ContainsKey(key));
