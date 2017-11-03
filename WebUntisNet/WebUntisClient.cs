@@ -412,8 +412,8 @@ namespace WebUntisNet
         /// <summary>
         /// Extracts the color combination with the given key from the list.
         /// </summary>
-        /// <param name="list"></param>
-        /// <param name="key"></param>
+        /// <param name="list">The list.</param>
+        /// <param name="key">The key.</param>
         /// <returns>The color combination.</returns>
         private ColorCombination ExtractColorCombinationFromStatusData(List<Dictionary<string, ColorAssignment>> list, string key)
         {
