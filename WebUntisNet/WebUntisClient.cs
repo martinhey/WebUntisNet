@@ -143,7 +143,7 @@ namespace WebUntisNet
         {
             EnsureLoggedIn();
 
-            var rpcRequest = new ExamsRequest(examTypeId, startDate.ToApiDate(), endDate.ToApiDate());
+            var rpcRequest = new ExamsRequest(examTypeId, TypeConverter.DateTimeToApiDate(startDate), TypeConverter.DateTimeToApiDate(endDate));
             var rpcResult = await _rpcClient.GetExamsAsync(rpcRequest, _sessionId, token);
 
             if (rpcResult.error?.code != null)
@@ -534,7 +534,14 @@ namespace WebUntisNet
 
 
         // TODO: GetSubstitutionsAsync
-        // TODO: GetClassregEventsAsync
+
+        /// <summary>
+        /// Gets all class register events for a specified time period.
+        /// </summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The list of class register events.</returns>
         public async Task<List<Event>> GetClassRegEvents(DateTime startDate, DateTime endDate, CancellationToken token = default(CancellationToken))
         {
             EnsureLoggedIn();

@@ -9,11 +9,6 @@ namespace WebUntisNet
             return (DayOfWeek) (day - 1);
         }
 
-        public static int ToApiDate(this DateTime value)
-        {
-            return DateTimeToApiDate(value);
-        }
-
         public static int DateTimeToApiDate(DateTime value)
         {
             return value.Year * 10000 + value.Month * 100 + value.Day;
