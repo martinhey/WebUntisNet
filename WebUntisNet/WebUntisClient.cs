@@ -372,7 +372,58 @@ namespace WebUntisNet
         }
 
 
-        // TODO: GetStatusDataAsync
+        /// <summary>
+        /// Gets the colors codes.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>All color codes for lessons and status infos.</returns>
+        public async Task<Types.StatusData> GetStatusDataAsync(CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new StatusDataRequest();
+            var rpcResult = await _rpcClient.GetStatusDataAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = new Types.StatusData
+            {
+                LessonTypes = new LessonTypeColors
+                {
+                    Standby = ExtractColorCombinationFromStatusData(rpcResult.result.lstypes, "sb"),
+                    OfficeHour = ExtractColorCombinationFromStatusData(rpcResult.result.lstypes, "oh"),
+                    Lesson = ExtractColorCombinationFromStatusData(rpcResult.result.lstypes, "ls"),
+                    BreakSupervision = ExtractColorCombinationFromStatusData(rpcResult.result.lstypes, "bs"),
+                    Examination = ExtractColorCombinationFromStatusData(rpcResult.result.lstypes, "ex")
+                },
+                Codes = new CodeColors
+                {
+                    Cancelled = ExtractColorCombinationFromStatusData(rpcResult.result.codes, "cancelled"),
+                    Irregular = ExtractColorCombinationFromStatusData(rpcResult.result.codes, "irregular")
+                }
+            };
+            
+            return result;
+        }
+
+        private ColorCombination ExtractColorCombinationFromStatusData(List<Dictionary<string, ColorAssignment>> list, string key)
+        {
+            var item = list.FirstOrDefault(x => x.ContainsKey(key));
+            if (item == null)
+            {
+                return null;
+            }
+            var colors = item[key];
+            return new ColorCombination
+            {
+                BackColorHex = colors.backColor,
+                ForeColorHex = colors.foreColor
+            };
+        }
+
 
 
         /// <summary>
