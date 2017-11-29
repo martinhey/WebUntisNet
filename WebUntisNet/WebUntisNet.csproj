@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/martinhey/WebUntisNet</RepositoryUrl>
     <PackageId>TaurusSoft.WebUntisNet</PackageId>
     <Description>A C# client to access WebUntis.</Description>
-    <Version>0.1.0</Version>
+    <Version>0.3.0-beta</Version>
   </PropertyGroup>
 
   <ItemGroup>
