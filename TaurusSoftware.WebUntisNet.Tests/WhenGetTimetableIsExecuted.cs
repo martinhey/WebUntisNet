@@ -15,5 +15,14 @@ namespace TaurusSoftware.WebUntisNet.Tests
 
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public async Task MyTimetableIsReturned()
+        {
+            var client = new WebUntisClient("https://demo.webuntis.com/WebUntis/jsonrpc.do", "demo_inf", "Lehrer", "", "CLIENT");
+            var result = await client.GetMyTimetableAsync();
+
+            Assert.NotNull(result);
+        }
     }
 }
