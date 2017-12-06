@@ -238,9 +238,7 @@ namespace TaurusSoftware.WebUntisNet.Tests
                 .Returns(Task.FromResult(responseText));
 
             var sut = new RpcClient(httpClient, "http://localhost");
-            var request = new SimpleTimetableRequest();
-            request.@params.id = 71;
-            request.@params.type = 1;
+            var request = new SimpleTimetableRequest(1, 71);
 
             var result = await sut.GetTimetableAsync(request, "session");
 
