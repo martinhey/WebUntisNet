@@ -14,17 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json\netstandard2.0\Newtonsoft.Json.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="lib\Newtonsoft.Json\netstandard2.0\Newtonsoft.Json.dll">
-      <PackagePath>lib\netstandard2.0\</PackagePath>
-      <Pack>true</Pack>
-    </Content>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
   </ItemGroup>
   
   
