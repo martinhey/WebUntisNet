@@ -2,6 +2,14 @@
 {
     public class SimpleTimetableRequest : RpcRequest<SimpleTimetableRequest.RequestParams>
     {
+        public SimpleTimetableRequest(int type, int id, int? startDate = null, int? endDate = null)
+        {
+            @params.type = type;
+            @params.id = id;
+            @params.startDate = startDate;
+            @params.endDate = endDate;
+        }
+
         public override string id => "ID";
         public override string method => "getTimetable";
 

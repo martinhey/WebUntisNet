@@ -97,13 +97,13 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Class
-                {
-                    Id = x.id,
-                    Name = x.name,
-                    LongName = x.longName,
-                    BackColorHex = x.backColor,
-                    ForeColorHex = x.foreColor
-                })
+            {
+                Id = x.id,
+                Name = x.name,
+                LongName = x.longName,
+                BackColorHex = x.backColor,
+                ForeColorHex = x.foreColor
+            })
                 .ToList();
             return result;
         }
@@ -183,14 +183,14 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Teacher
-                {
-                    Id = x.id,
-                    Abbreviation = x.name,
-                    BackColor = x.backColor,
-                    FirstName = x.foreName,
-                    LastName = x.longName,
-                    ForeColor = x.foreColor
-                })
+            {
+                Id = x.id,
+                Abbreviation = x.name,
+                BackColor = x.backColor,
+                FirstName = x.foreName,
+                LastName = x.longName,
+                ForeColor = x.foreColor
+            })
                 .ToList();
             return result;
         }
@@ -213,14 +213,14 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Student
-                {
-                    Id = x.id,
-                    Key = x.key,
-                    Abbreviation = x.name,
-                    FirstName = x.foreName,
-                    LastName = x.longName,
-                    Gender = "male".Equals(x.gender) ? Gender.Male : Gender.Female
-                })
+            {
+                Id = x.id,
+                Key = x.key,
+                Abbreviation = x.name,
+                FirstName = x.foreName,
+                LastName = x.longName,
+                Gender = "male".Equals(x.gender) ? Gender.Male : Gender.Female
+            })
                 .ToList();
             return result;
         }
@@ -244,13 +244,13 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Room
-                {
-                    Id = x.id,
-                    LongName = x.longName,
-                    ForeColorHex = x.foreColor,
-                    BackColorHex = x.backColor,
-                    Name = x.name
-                })
+            {
+                Id = x.id,
+                LongName = x.longName,
+                ForeColorHex = x.foreColor,
+                BackColorHex = x.backColor,
+                Name = x.name
+            })
                 .ToList();
             return result;
         }
@@ -274,13 +274,13 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Holiday
-                {
-                    Id = x.id,
-                    LongName = x.longName,
-                    Name = x.name,
-                    StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
-                    EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
-                })
+            {
+                Id = x.id,
+                LongName = x.longName,
+                Name = x.name,
+                StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
+                EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
+            })
                 .ToList();
             return result;
         }
@@ -303,11 +303,11 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Department
-                {
-                    Id = x.id,
-                    LongName = x.longName,
-                    Name = x.name
-                })
+            {
+                Id = x.id,
+                LongName = x.longName,
+                Name = x.name
+            })
                 .ToList();
             return result;
         }
@@ -330,13 +330,13 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.Subject
-                {
-                    Id = x.id,
-                    LongName = x.longName,
-                    Name = x.name,
-                    ForeColorHex = x.foreColor,
-                    BackColorHex = x.backColor
-                })
+            {
+                Id = x.id,
+                LongName = x.longName,
+                Name = x.name,
+                ForeColorHex = x.foreColor,
+                BackColorHex = x.backColor
+            })
                 .ToList();
             return result;
         }
@@ -359,14 +359,14 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.TimegridItem
+            {
+                Day = TypeConverter.ApiDayOfWeekToDayOfWeek(x.day),
+                TimeUnits = new List<TimegridUnit>(x.timeUnits.Select(y => new TimegridUnit
                 {
-                    Day = TypeConverter.ApiDayOfWeekToDayOfWeek(x.day),
-                    TimeUnits = new List<TimegridUnit>(x.timeUnits.Select(y => new TimegridUnit
-                    {
-                       StartTime = TypeConverter.ApiTimeToDateTime(y.startTime),
-                       EndTime = TypeConverter.ApiTimeToDateTime(y.endTime)
-                    }))
-                })
+                    StartTime = TypeConverter.ApiTimeToDateTime(y.startTime),
+                    EndTime = TypeConverter.ApiTimeToDateTime(y.endTime)
+                }))
+            })
                 .ToList();
             return result;
         }
@@ -405,7 +405,7 @@ namespace TaurusSoftware.WebUntisNet
                     Irregular = ExtractColorCombinationFromStatusData(rpcResult.result.codes, "irregular")
                 }
             };
-            
+
             return result;
         }
 
@@ -448,12 +448,12 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = new Types.SchoolYear
-                {
-                    Id = rpcResult.result.id,
-                    Name = rpcResult.result.name,
-                    StartDate = TypeConverter.ApiDateToDateTime(rpcResult.result.startDate),
-                    EndDate = TypeConverter.ApiDateToDateTime(rpcResult.result.endDate)
-                };
+            {
+                Id = rpcResult.result.id,
+                Name = rpcResult.result.name,
+                StartDate = TypeConverter.ApiDateToDateTime(rpcResult.result.startDate),
+                EndDate = TypeConverter.ApiDateToDateTime(rpcResult.result.endDate)
+            };
             return result;
         }
 
@@ -476,18 +476,93 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.SchoolYear
-                {
-                        Id = x.id,
-                        Name = x.name,
-                        StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
-                        EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
-                })
+            {
+                Id = x.id,
+                Name = x.name,
+                StartDate = TypeConverter.ApiDateToDateTime(x.startDate),
+                EndDate = TypeConverter.ApiDateToDateTime(x.endDate)
+            })
                 .ToList();
             return result;
         }
 
 
-        // TODO: GetTimetableAsync
+        /// <summary>
+        /// Gets the timetable for a specified element.
+        /// </summary>
+        /// <param name="type">The element type.</param>
+        /// <param name="elementId">The element's id.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The timetable for a specified element.</returns>
+        public Task<List<Types.Period>> GetTimetableAsync(ElementType type, int elementId, CancellationToken token = default(CancellationToken))
+        {
+            return GetTimetableAsync(type, elementId, null, null, token);
+        }
+
+        /// <summary>
+        /// Gets the timetable of the logged in person..
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The timetable for a specified element.</returns>
+        public Task<List<Types.Period>> GetMyTimetableAsync(CancellationToken token = default(CancellationToken))
+        {
+            if (!PersonType.HasValue || !PersonId.HasValue)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return GetTimetableAsync((ElementType)PersonType.Value, PersonId.Value, null, null, token);
+        }
+
+        /// <summary>
+        /// Gets the timetable for a specified element.
+        /// </summary>
+        /// <param name="type">The element type.</param>
+        /// <param name="elementId">The element's id.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The timetable for a specified element.</returns>
+        public async Task<List<Types.Period>> GetTimetableAsync(ElementType type, int elementId, DateTime? startDate, DateTime? endDate, CancellationToken token = default(CancellationToken))
+        {
+            EnsureLoggedIn();
+
+            var rpcRequest = new SimpleTimetableRequest((int)type, elementId, TypeConverter.DateTimeToApiDate(startDate.GetValueOrDefault(DateTime.Today)), TypeConverter.DateTimeToApiDate(endDate.GetValueOrDefault(DateTime.Today)));
+            var rpcResult = await _rpcClient.GetTimetableAsync(rpcRequest, _sessionId, token);
+
+            if (rpcResult.error?.code != null)
+            {
+                throw new RpcException(rpcResult.error.code, rpcResult.error.message);
+            }
+
+            var result = new List<Types.Period>();
+
+            foreach (var item in rpcResult.result)
+            {
+                var period = new Types.Period
+                {
+                    Start = TypeConverter.ApiDateAndTimeToDateTime(item.date, item.startTime),
+                    End = TypeConverter.ApiDateAndTimeToDateTime(item.date, item.endTime),
+                    Id = item.id,
+                    TeacherIds = item.te?.Select(x => x.id).ToList(),
+                    RoomIds = item.ro?.Select(x => x.id).ToList(),
+                    ClassIds = item.kl?.Select(x => x.id).ToList(),
+                    SubjectIds = item.su?.Select(x => x.id).ToList(),
+                    LessonType = TypeConverter.ApiLessonTypeToLessonType(item.lstype),
+                    Text = item.lstext,
+                    StatisticalFlags = item.statflags,
+                    Code = TypeConverter.ApiCodeToCode(item.code)
+
+                };
+                result.Add(period);
+            }
+
+            result.Sort((x, y) => { return x.Start.CompareTo(y.Start); });
+
+            return result;
+        }
+
+
 
         // TODO: Request timetable for an element (customizable)
 
@@ -561,15 +636,15 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Event
-                {
-                    StudentId = int.Parse(x.studentid),
-                    Subject = x.subject,
-                    FirstName = x.forname,
-                    LastName = x.surname,
-                    Date = TypeConverter.ApiDateToDateTime(x.date),
-                    Reason = x.reason,
-                    Text = x.text
-                })
+            {
+                StudentId = int.Parse(x.studentid),
+                Subject = x.subject,
+                FirstName = x.forname,
+                LastName = x.surname,
+                Date = TypeConverter.ApiDateToDateTime(x.date),
+                Reason = x.reason,
+                Text = x.text
+            })
                 .ToList();
             return result;
         }
@@ -592,9 +667,9 @@ namespace TaurusSoftware.WebUntisNet
             }
 
             var result = rpcResult.result.Select(x => new Types.ExamType
-                {
-                    // TODO: map properties
-                })
+            {
+                // TODO: map properties
+            })
                 .ToList();
             return result;
         }
