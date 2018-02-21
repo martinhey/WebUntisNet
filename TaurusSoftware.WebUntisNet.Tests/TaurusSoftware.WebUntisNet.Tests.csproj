@@ -7,6 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UntisClientTest.cs" />
+    <Compile Remove="WhenAuthenticateIsExecuted.cs" />
+    <Compile Remove="WhenGetClassRegEventsIsExecuted.cs" />
+    <Compile Remove="WhenGetCurrentSchoolYearIsExecuted.cs" />
+    <Compile Remove="WhenGetExamsIsExecuted.cs" />
+    <Compile Remove="WhenGetExamTypesIsExecuted.cs" />
+    <Compile Remove="WhenGetLatestImportTimeIsExecuted.cs" />
+    <Compile Remove="WhenGetSchoolYearsIsExecuted.cs" />
+    <Compile Remove="WhenGetStatusDataIsExecuted.cs" />
+    <Compile Remove="WhenGetStudentsIsExecuted.cs" />
+    <Compile Remove="WhenGetSubjectsIsExecuted.cs" />
+    <Compile Remove="WhenGetTeachersIsExecuted.cs" />
+    <Compile Remove="WhenGetTimegridIsExecuted.cs" />
+    <Compile Remove="WhenGetTimetableIsExecuted.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="4.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
