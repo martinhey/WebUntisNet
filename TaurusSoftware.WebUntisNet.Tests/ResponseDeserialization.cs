@@ -249,7 +249,7 @@ namespace TaurusSoftware.WebUntisNet.Tests
         public async Task CanDeserializeGetExamTypesResult()
         {
             const string responseText =
-                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":{}}";
+                "{\"jsonrpc\":\"2.0\",\"id\":\"req-002\",\"result\":[]}";
 
             var httpClient = A.Fake<IHttpClient>();
             A.CallTo(() => httpClient.SendAsync(A<Uri>._, A<string>._, A<string>._, A<int>._, A<CancellationToken>._))
