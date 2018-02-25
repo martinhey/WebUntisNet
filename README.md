@@ -1,10 +1,11 @@
 # WebUntisNet
 
-## Build status
+This is an API client to access Webuntis. It is written as .NET Standard library to be used in .NET Framework projects and .NET Core projects as well. 
+
+## Status
 
 ![Build status](https://travis-ci.org/martinhey/WebUntisNet.svg?branch=master)
-
-This is an API client to access Webuntis. It is written as .NET Standard library to be used in .NET Framework projects and .NET Core projects as well. 
+[![NuGet](https://img.shields.io/nuget/dt/TaurusSoftware.WebUntisNet.svg)](https://www.nuget.org/packages/TaurusSoftware.WebUntisNet/)
 
 ## Usage
 
